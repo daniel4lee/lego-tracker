@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>星際大戰 LEGO 蒐藏追蹤器</title>
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0a0f;color:#e0e0e0;font-family:'Segoe UI',sans-serif}
@@ -185,7 +187,7 @@ footer{text-align:center;padding:14px;color:#2a2a2a;font-size:.69em;border-top:1
   <select id="yearSel" onchange="applyFilter()"><option value="">全部年份</option></select>
   <select id="catFilter" onchange="applyFilter()" style="color:#00d4aa;border-color:#00504a"><option value="">全部分類</option><option value="__nc__">未分類</option></select><button class="btn" id="catClearBtn" onclick="clearCatFilter()" style="display:none;padding:5px 8px;color:#00d4aa;border-color:#00504a;font-size:.75em">✕ 清除分類篩選</button>
   <select id="sortSel" onchange="applyFilter()">
-    <option value="default">排序：年份</option>
+    <option value="default">排序：年份 新→舊</option>
     <option value="price_asc">價格：低→高</option>
     <option value="price_desc">價格：高→低</option>
     <option value="ppc_asc">每片：低→高</option>
@@ -783,10 +785,10 @@ function render(){
   const byY={};
   SETS.forEach(s=>{(byY[s.year]||(byY[s.year]=[])).push(s);});
   const yrSel=document.getElementById('yearSel');
-  Object.keys(byY).sort((a,b)=>a-b).forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y+'年';yrSel.appendChild(o);});
+  Object.keys(byY).sort((a,b)=>b-a).forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y+'年';yrSel.appendChild(o);});
   refreshCatFilter();
   const content=document.getElementById('content');
-  Object.keys(byY).sort((a,b)=>a-b).forEach(y=>{
+  Object.keys(byY).sort((a,b)=>b-a).forEach(y=>{
     const sec=document.createElement('div');
     sec.className='year-section';sec.dataset.year=y;
     const sets=byY[y],on=sets.filter(s=>owned.has(s.num)).length;
